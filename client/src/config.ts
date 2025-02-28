@@ -1,5 +1,5 @@
 export const ENV =
-  window.location.hostname === 'todo: change to prod domain'
+  window.location.hostname === 'kasigo.com'
     ? 'prod'
     : window.location.hostname.includes('todo: change to non prod matcher')
       ? 'stage'
@@ -12,7 +12,7 @@ export const getServerUrl = () => {
     case 'stage':
       return 'todo: change to stage url';
     case 'prod':
-      return 'todo: change to prod url';
+      return 'https://kasigo.com';
     case 'test':
       return 'http://localhost:8788';
     case 'dev':
