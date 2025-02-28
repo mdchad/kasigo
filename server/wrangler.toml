@@ -26,7 +26,7 @@ id = "e0c5eee53ed34ff69c4d8303f818adca"
 [env.prod]
 name = "kasigo-prod"
 workers_dev = true
-+ vars = { ALLOWED_HOST = "kasigo.pages.dev", ENV = "prod" }
+vars = { ALLOWED_HOST = "kasigo.pages.dev", ENV = "prod" }
 [[env.kv_namespaces]]
 binding = "DB"
 id = "3446dc8704ae4660a744bbc51083d843"
