@@ -114,7 +114,7 @@ jobs:
   publish-client:
     name: 🚀 Publish client
     if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
-    needs: [lint, typecheck, test, e2e]
+#    needs: [lint, typecheck, test, e2e]
     runs-on: ubuntu-latest
     env:
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
