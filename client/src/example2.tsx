@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import { Particles } from "@/components/magicui/particles";
 import {TextAnimate} from "@/components/magicui/text-animate";
 
 export function Example2() {
-  const [color, setColor] = useState("#fff");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const color = "#fff"
 
   return (
     <div className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-black">
