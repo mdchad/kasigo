@@ -14,7 +14,8 @@ export function Example2() {
       </span>
       <div className="mt-10 text-white">
         <TextAnimate animation="blurInUp" by="character" as="p">Act now</TextAnimate>
-        <TextAnimate animation="blurInUp" by="character" as={'p'} delay={0.7}>Go for it</TextAnimate>
+        <TextAnimate animation="blurInUp" by="character" as={'p'} delay={1.3}>Do first</TextAnimate>
+        <TextAnimate animation="blurInUp" by="character" as={'p'} delay={1.3}>Think after</TextAnimate>
         <TextAnimate animation="blurInUp" by="character" as={'p'} delay={1.3}>Kasi go</TextAnimate>
       </div>
       <Particles
