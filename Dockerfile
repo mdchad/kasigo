@@ -22,9 +22,6 @@ COPY . .
 # Build only the server application
 RUN cd apps/server && pnpm run build
 
-# Deploy server with its dependencies
-RUN pnpm deploy --filter=server --prod /prod/server
-
 # Start a new stage for production
 FROM node:20-alpine
 
@@ -35,11 +32,15 @@ RUN corepack enable
 
 WORKDIR /app
 
-# Copy the deployed server with all its dependencies
-COPY --from=builder /prod/server ./
+# Copy server files
+COPY --from=builder /app/apps/server/dist ./dist
+COPY --from=builder /app/apps/server/package.json ./package.json
+
+# Install production dependencies
+RUN pnpm install --prod --frozen-lockfile
 
 # Expose the port your app runs on
 EXPOSE 3000
 
-# Start the server application using pnpm start (which knows the correct path)
-CMD ["pnpm", "start"] 
+# Start the server application
+CMD ["node", "dist/index.js"] 
