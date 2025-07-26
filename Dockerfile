@@ -22,6 +22,9 @@ COPY . .
 # Build only the server application
 RUN cd apps/server && pnpm run build
 
+# Deploy server with its dependencies
+RUN pnpm deploy --filter=server --prod /prod/server
+
 # Start a new stage for production
 FROM node:20-alpine
 
@@ -32,10 +35,8 @@ RUN corepack enable
 
 WORKDIR /app
 
-# Copy only the server's built files and dependencies
-COPY --from=builder /app/apps/server/dist ./dist
-COPY --from=builder /app/apps/server/package.json ./package.json
-COPY --from=builder /app/node_modules ./node_modules
+# Copy the deployed server with all its dependencies
+COPY --from=builder /prod/server ./
 
 # Expose the port your app runs on
 EXPOSE 3000
