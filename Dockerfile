@@ -41,5 +41,5 @@ COPY --from=builder /prod/server ./
 # Expose the port your app runs on
 EXPOSE 3000
 
-# Start the server application
-CMD ["node", "dist/index.js"] 
+# Start the server application using pnpm start (which knows the correct path)
+CMD ["pnpm", "start"] 
