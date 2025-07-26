@@ -1,8 +1,17 @@
 # Use the official Node.js image
 FROM node:20-alpine as builder
 
+# Set up pnpm using corepack (official recommended way)
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
 # Set working directory to root
 WORKDIR /app
+
+# Copy package files for the server only
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY apps/server/package.json ./apps/server/
 
 # Install dependencies for the entire workspace
 RUN pnpm install --frozen-lockfile
@@ -15,6 +24,11 @@ RUN cd apps/server && pnpm run build
 
 # Start a new stage for production
 FROM node:20-alpine
+
+# Set up pnpm in production stage
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
 WORKDIR /app
 
