@@ -4,14 +4,6 @@ FROM node:20-alpine as builder
 # Set working directory to root
 WORKDIR /app
 
-# Install pnpm globally
-RUN npm install -g pnpm
-
-# Copy package files for the entire workspace (needed for building)
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY apps/server/package.json ./apps/server/
-COPY apps/web/package.json ./apps/web/
-
 # Install dependencies for the entire workspace
 RUN pnpm install --frozen-lockfile
 
