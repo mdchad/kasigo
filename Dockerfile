@@ -7,7 +7,7 @@ WORKDIR /app
 # Install pnpm globally
 RUN npm install -g pnpm
 
-# Copy package files
+# Copy package files for the entire workspace (needed for building)
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/server/package.json ./apps/server/
 COPY apps/web/package.json ./apps/web/
@@ -26,23 +26,13 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Install pnpm globally in production
-RUN npm install -g pnpm
-
-# Copy the root workspace structure
+# Copy only the server's built files and dependencies
+COPY --from=builder /app/apps/server/dist ./dist
+COPY --from=builder /app/apps/server/package.json ./package.json
 COPY --from=builder /app/node_modules ./node_modules
-#COPY --from=builder /app/packages ./packages
-COPY --from=builder /app/pnpm-lock.yaml .
-COPY --from=builder /app/package.json .
-COPY --from=builder /app/pnpm-workspace.yaml .
-
-# Copy server files
-COPY --from=builder /app/apps/server/dist ./apps/server/dist
-COPY --from=builder /app/apps/server/package.json ./apps/server/package.json
 
 # Expose the port your app runs on
 EXPOSE 3000
 
 # Start the server application
-WORKDIR /app/apps/server
-CMD ["pnpm", "run", "start"] 
+CMD ["node", "dist/index.js"] 
