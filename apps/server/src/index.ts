@@ -80,7 +80,7 @@ fastify.listen({ port: port as number, host: "0.0.0.0" }, (err, address) => {
     fastify.log.error(err);
     process.exit(1);
   }
-  console.log(`Server running on port ${port} on host 0.0.0.0`);
+  console.log(`Server running on port ${port}`);
   console.log(`Server running on address ${address}`);
 });
 
