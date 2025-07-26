@@ -37,11 +37,12 @@ COPY --from=builder /app/package.json .
 COPY --from=builder /app/pnpm-workspace.yaml .
 
 # Copy server files
-COPY --from=builder /app/apps/server/dist ./dist
+COPY --from=builder /app/apps/server/dist ./apps/server/dist
 COPY --from=builder /app/apps/server/package.json ./apps/server/package.json
 
 # Expose the port your app runs on
 EXPOSE 3000
 
 # Start the server application
+WORKDIR /app/apps/server
 CMD ["pnpm", "run", "start"] 
