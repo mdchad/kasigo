@@ -10,6 +10,8 @@ import { appRouter, type AppRouter } from "./routers/index";
 
 import { auth } from "./lib/auth";
 
+const port = process.env.PORT || 3000;
+
 const baseCorsConfig = {
   origin: process.env.CORS_ORIGIN || "",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -73,10 +75,12 @@ fastify.get('/', async () => {
   return 'OK'
 })
 
-fastify.listen({ port: 3000 }, (err) => {
+fastify.listen({ port: port as number, host: "0.0.0.0" }, (err, address) => {
   if (err) {
     fastify.log.error(err);
     process.exit(1);
   }
-  console.log("Server running on port 3000");
+  console.log(`Server running on port ${port} on host 0.0.0.0`);
+  console.log(`Server running on address ${address}`);
 });
+
