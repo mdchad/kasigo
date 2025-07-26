@@ -32,12 +32,13 @@ RUN corepack enable
 
 WORKDIR /app
 
-# Copy server files
+# Copy server files and lockfile
 COPY --from=builder /app/apps/server/dist ./dist
 COPY --from=builder /app/apps/server/package.json ./package.json
+COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
 
 # Install production dependencies
-RUN pnpm install --prod --frozen-lockfile
+RUN pnpm install --prod
 
 # Expose the port your app runs on
 EXPOSE 3000
