@@ -31,7 +31,7 @@ RUN npm install -g pnpm
 
 # Copy the root workspace structure
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/packages ./packages
+#COPY --from=builder /app/packages ./packages
 COPY --from=builder /app/pnpm-lock.yaml .
 COPY --from=builder /app/package.json .
 COPY --from=builder /app/pnpm-workspace.yaml .
