@@ -19,9 +19,6 @@ RUN pnpm install --frozen-lockfile
 # Copy the entire monorepo structure
 COPY . .
 
-# Run migrations before building
-RUN cd apps/server && npx tsx src/db/migrate.ts
-
 # Build only the server application
 RUN cd apps/server && pnpm run build
 
@@ -39,6 +36,10 @@ WORKDIR /app
 COPY --from=builder /app/apps/server/dist ./dist
 COPY --from=builder /app/apps/server/package.json ./package.json
 COPY --from=builder /app/apps/server/start.sh ./start.sh
+COPY --from=builder /app/apps/server/src/db/migrate.ts ./src/db/migrate.ts
+COPY --from=builder /app/apps/server/src/db/migrations ./src/db/migrations
+COPY --from=builder /app/apps/server/src/db/schema ./src/db/schema
+COPY --from=builder /app/apps/server/drizzle.config.ts ./drizzle.config.ts
 COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
 
 # Install production dependencies
