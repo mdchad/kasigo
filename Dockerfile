@@ -35,6 +35,7 @@ WORKDIR /app
 # Copy server files and lockfile
 COPY --from=builder /app/apps/server/dist ./dist
 COPY --from=builder /app/apps/server/package.json ./package.json
+COPY --from=builder /app/apps/server/start.sh ./start.sh
 COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
 
 # Install production dependencies
@@ -43,5 +44,6 @@ RUN pnpm install --prod
 # Expose the port your app runs on
 EXPOSE 3000
 
-# Start the server application
-CMD ["node", "dist/index.js"] 
+# Make the startup script executable and start the server application with migrations
+RUN chmod +x start.sh
+CMD ["./start.sh"] 
