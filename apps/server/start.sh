@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "Starting database migrations..."
-node dist/migrate.js
+node dist/src/db/migrate.js
 
 if [ $? -eq 0 ]; then
     echo "Migrations completed successfully. Starting server..."
