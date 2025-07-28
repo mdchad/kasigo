@@ -19,6 +19,9 @@ RUN pnpm install --frozen-lockfile
 # Copy the entire monorepo structure
 COPY . .
 
+# Run migrations before building
+RUN cd apps/server && npx tsx src/db/migrate.ts
+
 # Build only the server application
 RUN cd apps/server && pnpm run build
 
