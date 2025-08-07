@@ -8,7 +8,7 @@ export default function Header() {
     { to: "/", label: "Home" },
       { to: "/dashboard", label: "Dashboard" },
     { to: "/todos", label: "Todos" },
-    { to: "/automation", label: "Automation" },
+    { to: "/live", label: "Live" },
   ];
 
   return (

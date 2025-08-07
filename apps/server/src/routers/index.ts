@@ -3,7 +3,6 @@ import {
   router,
 } from "@/lib/trpc";
 import { todoRouter } from "./todo";
-import { automationRouter } from "./automation";
 
 export const appRouter = router({
   healthCheck: publicProcedure.query(() => {
@@ -15,7 +14,6 @@ export const appRouter = router({
       user: ctx.session.user,
     };
   }),
-  todo: todoRouter,
-  automation: automationRouter,
+  todo: todoRouter
 });
 export type AppRouter = typeof appRouter;
