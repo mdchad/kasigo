@@ -113,18 +113,8 @@ export const onkernelRouter = router({
     .mutation(async ({ input }) => {
       try {
         // Use direct API call instead of SDK
-        const response = await fetch(`https://api.onkernel.com/browsers?persistent_id=${input.persistence_id}`, {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${process.env.KERNEL_API_KEY}`,
-            'Content-Type': 'application/json',
-          },
-        });
 
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`API request failed: ${response.status} ${response.statusText} - ${errorText}`);
-        }
+        const browser = await client.browsers.delete({ persistent_id: input.persistence_id });
 
         return { success: true };
       } catch (error) {
@@ -135,21 +125,11 @@ export const onkernelRouter = router({
   listBrowsers: publicProcedure
     .query(async () => {
       try {
-        const response = await fetch(`https://api.onkernel.com/browsers`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${process.env.KERNEL_API_KEY}`,
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`API request failed: ${response.status} ${response.statusText} - ${errorText}`);
-        }
+        const browsers = await client.browsers.list();
 
 
-        return { success: true };
+
+        return { success: true, browsers };
         // return response.data.map((browser: any) => ({
         //   id: browser.id,
         //   browser_live_view_url: browser.browser_live_view_url,
